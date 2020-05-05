@@ -10,6 +10,9 @@ body {
   width: 100%;
   height: 100vh;
   font-family: 'Roboto', sans-serif;
+}
+
+.login-page {
   background: url('../img/login_background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
@@ -65,4 +68,14 @@ body {
   color: white;
   border-radius: 5px;
   padding: 10px 0;
+}
+
+.navbar {
+  background-color: #4484ce !important;
+  color: white;
+}
+
+.illustration {
+  width: 100%;
+  height: 100%;
 }

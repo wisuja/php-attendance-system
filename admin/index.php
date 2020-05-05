@@ -57,7 +57,7 @@ if (isset($_GET["page"])) {
             <a class="nav-link" href="index.php?page=akun">Akun</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="logout.php"><button class="btn btn-outline-warning">Logout</button></a>
+            <a class="nav-link" href="../logout.php"><button class="btn btn-outline-warning">Logout</button></a>
           </li>
         </ul>
       </div>
