@@ -5,6 +5,7 @@ if ($_SESSION["status"] !== "karyawan") {
   header("Location: ../index.php?msg=notlogin");
 }
 
+require('../koneksi.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,22 +45,56 @@ if ($_SESSION["status"] !== "karyawan") {
 
   <!-- Content -->
   <div class="container">
-    <div class="row">
-      <div class="col-md-5">
-
+    <div class="row karyawan-container">
+      <div class="col-md-6 absen-container">
+        <div class="card absen-card text-center my-3" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Jam: <div id="timestamp"></div>
+            </h5>
+          </div>
+        </div>
+        <div class="card absen-card" style="width: 18rem;">
+          <div class="card-body">
+            <h4 class="card-title text-center">Absen di sini</h4>
+            <form action="aksi_tambah.php" method="POST" enctype="multipart/form-data">
+              <div class="text-center">
+                <button type="submit" name="absen" class="btn-absen">
+                  <i class="fas fa-fingerprint"></i>
+                </button>
+              </div>
+              <div class="form-group mt-3">
+                <label for="lokasi">Pilih lokasi</label>
+                <select class="form-control" id="lokasi" name="lokasi">
+                  <?php
+                  $data = mysqli_query($koneksi, "SELECT nama FROM lokasi");
+                  while ($d = mysqli_fetch_assoc($data)) :
+                  ?>
+                    <option value="<?php echo $d["nama"] ?>"><?php echo $d["nama"] ?></option>
+                  <?php endwhile; ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="upload">Upload Gambar</label>
+                <input type="file" class="form-control-file" id="upload" name="gambar" required>
+              </div>
+              <div class="form-group">
+                <label for="pesan">Pesan</label>
+                <textarea class="form-control" name="pesan" id="pesan" rows="3" required></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-6 text-center">
         <img src="../img/karyawan_illustration.png" alt="ilustrasi" class="illustration">
+        <h3 class="text-muted">Work hard, Play Hard</h3>
       </div>
     </div>
   </div>
   <!-- End of Content -->
 
-  <!-- Clock -->
-  <!-- End of Clock -->
-
   <!-- Footer -->
-  <footer class="fixed-bottom text-center py-3 bg-light">
+  <footer class="text-center py-3 bg-light mt-3">
     &copy; Will 2020. All rights reserved.
   </footer>
   <!-- End of Footer -->
@@ -68,6 +103,22 @@ if ($_SESSION["status"] !== "karyawan") {
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function() {
+      console.log("test");
+      setInterval(timestamp, 1000);
+    });
+
+    function timestamp() {
+      $.ajax({
+        url: 'http://localhost/absensi_karyawan/karyawan/timestamp.php',
+        success: function(data) {
+          $('#timestamp').html(data);
+        },
+      });
+    }
+  </script>
 </body>
 
 </html>

@@ -77,5 +77,41 @@ body {
 
 .illustration {
   width: 100%;
+}
+
+.karyawan-container {
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: red !important; */
+}
+
+.absen-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#timestamp {
+  display: inline-block;
+}
+
+.fa-fingerprint {
+  font-size: 6rem;
+  color: white;
+}
+
+.fa-fingerprint:hover {
+  color: #333;
+}
+
+.btn-absen {
+  border: none;
+  background-color: transparent;
+}
+
+.absen-card {
+  background-color: #4484ce;
+  color: white;
 }
