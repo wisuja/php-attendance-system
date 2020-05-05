@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2020 at 06:33 AM
+-- Generation Time: May 05, 2020 at 08:54 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -29,8 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `absensi` (
-  `id_karyawan` int(11) NOT NULL,
-  `absen_terakhir` datetime NOT NULL,
+  `id` int(11) NOT NULL,
+  `nama_karyawan` varchar(100) NOT NULL,
+  `waktu` datetime NOT NULL,
+  `lokasi` varchar(50) NOT NULL,
+  `pesan` varchar(100) NOT NULL,
   `hadir` int(11) NOT NULL,
   `sakit` int(11) NOT NULL,
   `izin` int(11) NOT NULL,
@@ -66,6 +69,7 @@ CREATE TABLE `karyawan` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `jenis_kelamin` char(1) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
   `no_telp` varchar(13) NOT NULL,
   `email` varchar(200) NOT NULL,
   `jabatan` varchar(100) NOT NULL,
@@ -79,8 +83,19 @@ CREATE TABLE `karyawan` (
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `jabatan`, `no_ktp`, `gaji`, `id_shift`, `id_departemen`) VALUES
-(1, 'Mark', 'L', '081212121212', 'mark@gmail.com', 'Manajer', '01234567890', 10000000, 1, 1);
+INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `tanggal_lahir`, `no_telp`, `email`, `jabatan`, `no_ktp`, `gaji`, `id_shift`, `id_departemen`) VALUES
+(1, 'Mark', 'L', '0000-00-00', '081212121212', 'mark@gmail.com', 'Manajer', '01234567890', 10000000, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -90,16 +105,18 @@ INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `jaba
 
 CREATE TABLE `shift` (
   `id` int(11) NOT NULL,
-  `shift` varchar(50) NOT NULL
+  `shift` varchar(50) NOT NULL,
+  `jam_mulai` varchar(8) NOT NULL,
+  `jam_berhenti` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `shift`
 --
 
-INSERT INTO `shift` (`id`, `shift`) VALUES
-(1, 'Pagi'),
-(2, 'Sore');
+INSERT INTO `shift` (`id`, `shift`, `jam_mulai`, `jam_berhenti`) VALUES
+(1, 'Pagi', '', ''),
+(2, 'Sore', '', '');
 
 -- --------------------------------------------------------
 
@@ -110,19 +127,26 @@ INSERT INTO `shift` (`id`, `shift`) VALUES
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL
+  `password` varchar(200) NOT NULL,
+  `account_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'admin');
+INSERT INTO `user` (`id`, `username`, `password`, `account_type`) VALUES
+(1, 'admin', 'admin', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `absensi`
+--
+ALTER TABLE `absensi`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `departemen`
@@ -134,6 +158,12 @@ ALTER TABLE `departemen`
 -- Indexes for table `karyawan`
 --
 ALTER TABLE `karyawan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `lokasi`
+--
+ALTER TABLE `lokasi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -153,6 +183,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `absensi`
+--
+ALTER TABLE `absensi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
@@ -163,6 +199,12 @@ ALTER TABLE `departemen`
 --
 ALTER TABLE `karyawan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `shift`
