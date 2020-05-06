@@ -6,9 +6,14 @@
   box-sizing: border-box;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -84,7 +89,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: red !important; */
+  margin-bottom: 50px;
 }
 
 .absen-container {
@@ -114,4 +119,13 @@ body {
 .absen-card {
   background-color: #4484ce;
   color: white;
+}
+
+footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  overflow: hidden;
 }

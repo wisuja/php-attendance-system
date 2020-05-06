@@ -94,7 +94,7 @@ require('../koneksi.php');
   <!-- End of Content -->
 
   <!-- Footer -->
-  <footer class="text-center py-3 bg-light mt-3">
+  <footer class="text-center py-3 bg-light">
     &copy; Will 2020. All rights reserved.
   </footer>
   <!-- End of Footer -->
