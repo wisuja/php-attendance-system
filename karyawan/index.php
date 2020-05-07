@@ -6,6 +6,8 @@ if ($_SESSION["status"] !== "karyawan") {
 }
 
 require('../koneksi.php');
+
+$nama = $_SESSION["username"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +32,7 @@ require('../koneksi.php');
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto align-items-center">
           <li class="nav-item mr-4">
-            <p class="font-weight-bold lead mt-3">Halo, <?php echo $_SESSION["username"]; ?></p>
+            <p class="font-weight-bold lead mt-3">Halo, <?php echo $nama; ?></p>
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-outline-warning text-white px-3" href="../logout.php">
@@ -53,37 +55,55 @@ require('../koneksi.php');
             </h5>
           </div>
         </div>
-        <div class="card absen-card" style="width: 18rem;">
-          <div class="card-body">
-            <h4 class="card-title text-center">Absen di sini</h4>
-            <form action="aksi_tambah.php" method="POST" enctype="multipart/form-data">
-              <div class="text-center">
-                <button type="submit" name="absen" class="btn-absen">
-                  <i class="fas fa-fingerprint"></i>
-                </button>
-              </div>
-              <div class="form-group mt-3">
-                <label for="lokasi">Pilih lokasi</label>
-                <select class="form-control" id="lokasi" name="lokasi">
-                  <?php
-                  $data = mysqli_query($koneksi, "SELECT nama FROM lokasi");
-                  while ($d = mysqli_fetch_assoc($data)) :
-                  ?>
-                    <option value="<?php echo $d["nama"] ?>"><?php echo $d["nama"] ?></option>
-                  <?php endwhile; ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="upload">Upload Gambar</label>
-                <input type="file" class="form-control-file" id="upload" name="gambar" required>
-              </div>
-              <div class="form-group">
-                <label for="pesan">Pesan</label>
-                <textarea class="form-control" name="pesan" id="pesan" rows="3" required></textarea>
-              </div>
-            </form>
+
+        <?php
+        $today = date('Y-m-d');
+        $minAbsen = $today . " 00:00:00";
+        $maxAbsen = $today . " 23:59:59";
+
+        $data = mysqli_query($koneksi, "SELECT id FROM absensi WHERE nama_karyawan = '$nama' AND waktu BETWEEN '$minAbsen' AND '$maxAbsen'");
+
+        if (mysqli_num_rows($data) > 0) :
+        ?>
+          <div class="card absen-card" style="width: 18rem;">
+            <div class="card-body">
+              <h4 class="card-title text-center">Kamu sudah absen hari ini.</h4>
+            </div>
           </div>
-        </div>
+        <?php else : ?>
+          <div class="card absen-card" style="width: 18rem;">
+            <div class="card-body">
+              <h4 class="card-title text-center">Absen di sini</h4>
+              <form action="aksi_tambah.php" method="POST" enctype="multipart/form-data">
+                <div class="text-center">
+
+                  <button type="submit" name="absen" class="btn-absen" <?php if (mysqli_num_rows($data) > 0) echo "disabled"; ?>>
+                    <i class="fas fa-fingerprint"></i>
+                  </button>
+                </div>
+                <div class="form-group mt-3">
+                  <label for="lokasi">Pilih lokasi</label>
+                  <select class="form-control" id="lokasi" name="lokasi">
+                    <?php
+                    $data = mysqli_query($koneksi, "SELECT nama FROM lokasi");
+                    while ($d = mysqli_fetch_assoc($data)) :
+                    ?>
+                      <option value="<?php echo $d["nama"] ?>"><?php echo $d["nama"] ?></option>
+                    <?php endwhile; ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="upload">Upload Gambar</label>
+                  <input type="file" class="form-control-file" id="upload" name="gambar" required>
+                </div>
+                <div class="form-group">
+                  <label for="pesan">Pesan</label>
+                  <textarea class="form-control" name="pesan" id="pesan" rows="3" required></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        <?php endif; ?>
       </div>
       <div class="col-md-6 text-center">
         <img src="../img/karyawan_illustration.png" alt="ilustrasi" class="illustration">
