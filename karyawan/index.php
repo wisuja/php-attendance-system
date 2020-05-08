@@ -126,7 +126,6 @@ $nama = $_SESSION["username"];
 
   <script>
     $(document).ready(function() {
-      console.log("test");
       setInterval(timestamp, 1000);
     });
 
