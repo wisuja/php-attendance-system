@@ -21,11 +21,11 @@ if (isset($_POST["tambah"])) {
   }
 } else if (isset($_POST["ubah"])) {
   $id = $_POST["id"];
-  $nama_shift = $_POST["nama_shift"];
+  $shift = $_POST["shift"];
   $jam_mulai = $_POST["jam_mulai"];
-  $jam_berakhir = $_POST["jam_berakhir"];
+  $jam_berhenti = $_POST["jam_berhenti"];
 
-  mysqli_query($koneksi, "UPDATE shift SET shift = '$nama_shift', jam_mulai = '$jam_mulai', jam_berhenti = '$jam_berakhir' WHERE id = $id");
+  mysqli_query($koneksi, "UPDATE shift SET shift = '$shift', jam_mulai = '$jam_mulai', jam_berhenti = '$jam_berhenti' WHERE id = $id");
 
   if (mysqli_affected_rows($koneksi) > 0) {
     echo "<script>

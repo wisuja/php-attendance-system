@@ -43,13 +43,14 @@ if (isset($_POST["tambah"])) {
 
   mysqli_query($koneksi, "DELETE FROM user WHERE id = $id");
 
+  $msg;
+
   if (mysqli_affected_rows($koneksi) > 0) {
     $msg = "Hapus data berhasil";
-    echo json_encode($msg);
   } else {
     $msg = "Hapus data gagal";
-    echo json_encode($msg);
   }
+  echo json_encode($msg);
 } else if (isset($_POST["id"])) {
   $id = $_POST["id"];
   $data = mysqli_query($koneksi, "SELECT username, account_type FROM user WHERE id = $id");
