@@ -61,23 +61,17 @@ $nama = $_SESSION["username"];
         $minAbsen = $today . " 00:00:00";
         $maxAbsen = $today . " 23:59:59";
 
-        $data = mysqli_query($koneksi, "SELECT id FROM absensi WHERE nama_karyawan = '$nama' AND waktu BETWEEN '$minAbsen' AND '$maxAbsen'");
+        $data = mysqli_query($koneksi, "SELECT id, tipe_absen FROM absensi WHERE nama_karyawan = '$nama' AND waktu BETWEEN '$minAbsen' AND '$maxAbsen' ORDER BY id DESC LIMIT 1");
 
-        if (mysqli_num_rows($data) > 0) :
+        if (mysqli_num_rows($data) == 0) :
         ?>
           <div class="card absen-card" style="width: 18rem;">
             <div class="card-body">
-              <h4 class="card-title text-center">Kamu sudah absen hari ini.</h4>
-            </div>
-          </div>
-        <?php else : ?>
-          <div class="card absen-card" style="width: 18rem;">
-            <div class="card-body">
-              <h4 class="card-title text-center">Absen di sini</h4>
+              <h4 class="card-title text-center">Absen datang di sini</h4>
               <form action="aksi_tambah.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" value="1" name="tipe_absen">
                 <div class="text-center">
-
-                  <button type="submit" name="absen" class="btn-absen" <?php if (mysqli_num_rows($data) > 0) echo "disabled"; ?>>
+                  <button type="submit" name="absen" class="btn-absen">
                     <i class="fas fa-fingerprint"></i>
                   </button>
                 </div>
@@ -103,6 +97,50 @@ $nama = $_SESSION["username"];
               </form>
             </div>
           </div>
+          <?php else :
+          while ($d = mysqli_fetch_assoc($data)) :
+            if ($d["tipe_absen"] == 1) :
+          ?>
+              <div class="card absen-card" style="width: 18rem;">
+                <div class="card-body">
+                  <h4 class="card-title text-center">Absen pulang di sini</h4>
+                  <form action="aksi_tambah.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" value="2" name="tipe_absen">
+                    <div class="text-center">
+                      <button type="submit" name="absen" class="btn-absen">
+                        <i class="fas fa-fingerprint"></i>
+                      </button>
+                    </div>
+                    <div class="form-group mt-3">
+                      <label for="lokasi">Pilih lokasi</label>
+                      <select class="form-control" id="lokasi" name="lokasi">
+                        <?php
+                        $data = mysqli_query($koneksi, "SELECT nama FROM lokasi");
+                        while ($d = mysqli_fetch_assoc($data)) :
+                        ?>
+                          <option value="<?php echo $d["nama"] ?>"><?php echo $d["nama"] ?></option>
+                        <?php endwhile; ?>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="upload">Upload Gambar</label>
+                      <input type="file" class="form-control-file" id="upload" name="gambar" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="pesan">Pesan</label>
+                      <textarea class="form-control" name="pesan" id="pesan" rows="3" required></textarea>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            <?php else : ?>
+              <div class="card absen-card" style="width: 18rem;">
+                <div class="card-body">
+                  <h4 class="card-title text-center">Kamu sudah absen hari ini.</h4>
+                </div>
+              </div>
+            <?php endif; ?>
+          <?php endwhile; ?>
         <?php endif; ?>
       </div>
       <div class="col-md-6 text-center">

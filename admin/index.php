@@ -117,6 +117,9 @@ $nama = $_SESSION["username"];
           case "akun":
             include "halaman/akun.php";
             break;
+          case "absensi":
+            include "halaman/absensi.php";
+            break;
           default:
             echo "<h3 class='mt-2'>Halaman ini belum tersedia</h3>";
             break;

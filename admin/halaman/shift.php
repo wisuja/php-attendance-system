@@ -90,12 +90,6 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
-
-          </div>
-          <div class="form-group">
-
-          </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" name="tambah" id="buttonSubmit">Tambah</button>
