@@ -2,7 +2,7 @@
   <div class="col-12">
     <div class="card" style="width: 100%;">
       <div class="card-body bg-dark text-white">
-        <h3 class="card-title">Daftar Lokasi</h3>
+        <h3 class="card-title">Daftar Departemen</h3>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
       <div class="card-body table-responsive">
         <?php
         $i = 1;
-        $data = mysqli_query($koneksi, "SELECT * FROM lokasi");
+        $data = mysqli_query($koneksi, "SELECT * FROM departemen");
         ?>
         <a href="#" class="btn btn-outline-dark float-right mb-3 tambah-btn" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
           <i class="fas fa-plus mr-2"></i>Tambah
@@ -22,7 +22,8 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">No</th>
-              <th scope="col">Lokasi</th>
+              <th scope="col">Nama Departemen</th>
+              <th scope="col">Kepala Departemen</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -33,6 +34,7 @@
               <tr>
                 <th scope="row"><?= $i ?></th>
                 <td><?= $d["nama"] ?></td>
+                <td><?= $d["kepala_dept"] ?></td>
                 <td>
                   <a href="" class="btn edit-btn" data-id="<?php echo $d["id"]; ?>" data-toggle="modal" data-target="#formModal" onclick="changeType('ubah');">
                     <i class="fas fa-edit"></i>
@@ -58,17 +60,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Tambah Lokasi</h5>
+        <h5 class="modal-title" id="formModalLabel">Tambah Departemen</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="halaman/aksi_lokasi.php" method="POST">
+        <form action="halaman/aksi_departemen.php" method="POST">
           <input type="hidden" name="id" id="id">
           <div class="form-group">
-            <label for="lokasi">Nama Lokasi</label>
-            <input type="text" class="form-control" id="lokasi" placeholder="Enter location.." name="lokasi" required>
+            <label for="departemen">Nama Departemen</label>
+            <input type="text" class="form-control" id="departemen" placeholder="Enter your department.." name="departemen" required>
+          </div>
+          <div class="form-group">
+            <label for="kepala_dept">Kepala Departemen</label>
+            <select class="form-control" id="kepala_dept" name="kepala_dept">
+              <?php
+              $data = mysqli_query($koneksi, "SELECT nama FROM karyawan");
+              while ($d = mysqli_fetch_assoc($data)) :
+              ?>
+                <option value="<?php echo $d["nama"] ?>"><?php echo $d["nama"] ?></option>
+              <?php endwhile; ?>
+            </select>
           </div>
       </div>
       <div class="modal-footer">
@@ -82,7 +95,7 @@
 <script>
   $(document).ready(function() {
     $(".tambah-btn").on("click", function() {
-      $("#lokasi").val("");
+      $("#departemen").val("");
     });
 
     $(".edit-btn").on("click", function() {
@@ -90,14 +103,15 @@
       $("#id").val(id);
 
       $.ajax({
-        url: 'halaman/aksi_lokasi.php',
+        url: 'halaman/aksi_departemen.php',
         type: 'POST',
         dataType: 'json',
         data: ({
           id: id
         }),
         success: function(data) {
-          $("#lokasi").val(data.nama);
+          $("#departemen").val(data.nama);
+          $("#kepala_dept").val(data.kepala_dept);
         }
       })
     })
@@ -106,7 +120,7 @@
       var id = $(this).data("id");
 
       $.ajax({
-        url: 'halaman/aksi_lokasi.php',
+        url: 'halaman/aksi_departemen.php',
         type: 'POST',
         dataType: 'json',
         data: ({
@@ -129,12 +143,12 @@
 
     switch (_type) {
       case 'tambah':
-        modalTitle.innerHTML = "Tambah Lokasi";
+        modalTitle.innerHTML = "Tambah Departemen";
         buttonSubmit.innerHTML = "Tambah";
         buttonSubmit.name = "tambah";
         break;
       case 'ubah':
-        modalTitle.innerHTML = "Edit Lokasi";
+        modalTitle.innerHTML = "Edit Departemen";
         buttonSubmit.innerHTML = "Edit";
         buttonSubmit.name = "ubah";
         break;

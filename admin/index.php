@@ -105,6 +105,9 @@ $nama = $_SESSION["username"];
           case "karyawan":
             include "halaman/karyawan.php";
             break;
+          case "departemen":
+            include "halaman/departemen.php";
+            break;
           case "shift":
             include "halaman/shift.php";
             break;

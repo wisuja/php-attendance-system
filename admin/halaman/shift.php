@@ -15,7 +15,7 @@
         $i = 1;
         $data = mysqli_query($koneksi, "SELECT * FROM shift");
         ?>
-        <a href="#" class="btn btn-outline-dark float-right mb-3" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
+        <a href="#" class="btn btn-outline-dark float-right mb-3 tambah-btn" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
           <i class="fas fa-plus mr-2"></i>Tambah
         </a>
         <table class="table table-hover text-center">
@@ -113,6 +113,10 @@
     $('#jam_berhenti').datetimepicker({
       format: 'LT',
       useCurrent: false
+    });
+
+    $(".tambah-btn").on("click", function() {
+      $("#shift").val("");
     });
 
     $(".edit-btn").on("click", function() {

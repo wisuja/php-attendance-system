@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2020 at 02:31 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.4
+-- Generation Time: May 11, 2020 at 06:14 AM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -65,11 +66,10 @@ CREATE TABLE `karyawan` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `jenis_kelamin` char(1) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
   `no_telp` varchar(13) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `jabatan` varchar(100) NOT NULL,
   `no_ktp` varchar(50) NOT NULL,
+  `alamat` varchar(200) NOT NULL,
   `gaji` int(11) NOT NULL,
   `id_shift` int(11) NOT NULL,
   `id_departemen` int(11) NOT NULL
@@ -79,8 +79,8 @@ CREATE TABLE `karyawan` (
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `tanggal_lahir`, `no_telp`, `email`, `jabatan`, `no_ktp`, `gaji`, `id_shift`, `id_departemen`) VALUES
-(1, 'Mark', 'L', '0000-00-00', '081212121212', 'mark@gmail.com', 'Manajer', '01234567890', 10000000, 1, 1);
+INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `no_ktp`, `alamat`, `gaji`, `id_shift`, `id_departemen`) VALUES
+(1, 'Mark', 'L', '1231231231', 'mark@gmail.com', '01234567890', 'asdasdasd', 10000000, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -121,8 +121,8 @@ CREATE TABLE `shift` (
 --
 
 INSERT INTO `shift` (`id`, `shift`, `jam_mulai`, `jam_berhenti`) VALUES
-(1, 'Pagi', '', ''),
-(2, 'Sore', '', '');
+(1, 'Pagi', '8:00 AM', '3:00 PM'),
+(2, 'Sore', '3:00 PM', '10:00 PM');
 
 -- --------------------------------------------------------
 
@@ -199,19 +199,19 @@ ALTER TABLE `absensi`
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shift`
@@ -223,7 +223,7 @@ ALTER TABLE `shift`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

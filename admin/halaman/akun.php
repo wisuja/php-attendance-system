@@ -15,7 +15,7 @@
         $i = 1;
         $data = mysqli_query($koneksi, "SELECT id, username, account_type FROM user");
         ?>
-        <a href="#" class="btn btn-outline-dark float-right mb-3" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
+        <a href="#" class="btn btn-outline-dark float-right mb-3 tambah-btn" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
           <i class="fas fa-plus mr-2"></i>Tambah
         </a>
         <table class="table table-hover text-center">
@@ -94,6 +94,10 @@
 
 <script>
   $(document).ready(function() {
+    $(".tambah-btn").on("click", function() {
+      $("#username").val("");
+    });
+
     $(".edit-btn").on("click", function() {
       var id = $(this).data("id");
       $("#id").val(id);
@@ -124,7 +128,6 @@
           id: id
         }),
         success: function(data) {
-          console.log(data);
           alert(data);
         },
         error: function(error) {
