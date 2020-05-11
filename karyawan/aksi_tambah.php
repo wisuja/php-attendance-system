@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+date_default_timezone_set('Asia/Jakarta');
+
 require '../koneksi.php';
 
 $nama_karyawan = $_SESSION["username"];
