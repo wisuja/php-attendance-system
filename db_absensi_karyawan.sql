@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2020 at 09:08 AM
+-- Generation Time: May 14, 2020 at 07:00 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -44,14 +44,14 @@ CREATE TABLE `absensi` (
 --
 
 INSERT INTO `absensi` (`id`, `nama_karyawan`, `waktu`, `lokasi`, `pesan`, `gambar`, `tipe_absen`, `hadir`) VALUES
-(4, 'Mark', '2020-05-11 11:54:17', 'Kantor', 'asd', '504-img1.jpg', 0, 0),
-(5, 'karyawan', '2020-05-11 13:06:35', 'Rumah', 'asdas', '238-img1.jpg', 1, 2),
-(8, 'will', '2020-05-11 13:33:57', 'Kantor', 'asdasd', '818-img1.jpg', 1, 2),
-(9, 'test', '2020-05-11 13:42:15', 'Kantor', 'asd', '229-img1.jpg', 1, 1),
-(10, 'test', '2020-05-11 13:42:43', 'Rumah', 'asd', '488-img1.jpg', 2, 1),
-(11, 'test1', '2020-05-11 13:44:14', 'Kantor', 'asdas', '557-img1.jpg', 1, 1),
-(12, 'test1', '2020-05-11 13:44:21', 'Rumah', 'asdas', '614-img1.jpg', 2, 1),
-(13, 'test2', '2020-05-11 13:45:04', 'Kantor', 'asd', '694-img1.jpg', 1, 1);
+(4, 'Will', '2020-05-11 11:54:17', 'Kantor', 'asd', 'login_background.jpg', 0, 0),
+(5, 'Will', '2020-05-11 13:06:35', 'Rumah', 'asdas', 'login_background.jpg', 1, 2),
+(8, 'Will', '2020-05-11 13:33:57', 'Kantor', 'asdasd', 'login_background.jpg', 1, 2),
+(9, 'Will', '2020-05-11 13:42:15', 'Kantor', 'asd', 'login_background.jpg', 1, 1),
+(10, 'Will', '2020-05-11 13:42:43', 'Rumah', 'asd', 'login_background.jpg', 2, 1),
+(11, 'Will', '2020-05-11 13:44:14', 'Kantor', 'asdas', 'login_background.jpg', 1, 1),
+(12, 'Will', '2020-05-11 13:44:21', 'Rumah', 'asdas', 'login_background.jpg', 2, 1),
+(13, 'Will', '2020-05-11 13:45:04', 'Kantor', 'asd', 'login_background.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -80,13 +80,16 @@ INSERT INTO `departemen` (`id`, `nama`, `kepala_dept`) VALUES
 
 CREATE TABLE `karyawan` (
   `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `account_type` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `jenis_kelamin` char(1) NOT NULL,
   `no_telp` varchar(13) NOT NULL,
   `email` varchar(200) NOT NULL,
   `no_ktp` varchar(50) NOT NULL,
   `alamat` varchar(200) NOT NULL,
-  `gaji` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL,
   `id_shift` int(11) NOT NULL,
   `id_departemen` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -95,8 +98,8 @@ CREATE TABLE `karyawan` (
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `no_ktp`, `alamat`, `gaji`, `id_shift`, `id_departemen`) VALUES
-(1, 'Will', 'L', '1231231231', 'mark@gmail.com', '01234567890', 'asdasdasd', 10000000, 1, 1);
+INSERT INTO `karyawan` (`id`, `username`, `password`, `account_type`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `no_ktp`, `alamat`, `foto`, `id_shift`, `id_departemen`) VALUES
+(9, 'will', 'will', 1, 'Will', 'L', '123123', '123123@12312', '123123', 'batam', 'login_background.jpg', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -140,31 +143,6 @@ INSERT INTO `shift` (`id`, `shift`, `jam_mulai`, `jam_berhenti`) VALUES
 (1, 'Pagi', '8:00 AM', '3:00 PM'),
 (2, 'Sore', '3:00 PM', '10:00 PM');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  `account_type` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `username`, `password`, `account_type`) VALUES
-(1, 'admin', 'admin', 1),
-(2, 'karyawan', 'karyawan', 2),
-(9, 'will', 'will', 2),
-(10, 'test', 'test', 2),
-(11, 'test1', 'test1', 2),
-(12, 'test2', 'test2', 2);
-
 --
 -- Indexes for dumped tables
 --
@@ -200,12 +178,6 @@ ALTER TABLE `shift`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -219,31 +191,25 @@ ALTER TABLE `absensi`
 -- AUTO_INCREMENT for table `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `lokasi`
 --
 ALTER TABLE `lokasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `shift`
 --
 ALTER TABLE `shift`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
