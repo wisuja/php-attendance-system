@@ -37,7 +37,7 @@
                   <a href="" class="btn edit-btn" data-id="<?php echo $d["id"]; ?>" data-toggle="modal" data-target="#formModal" onclick="changeType('ubah');">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>" onclick="return confirm('Anda yakin untuk menghapus data ini?')">
+                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
@@ -103,23 +103,25 @@
     })
 
     $(".hapus-btn").on("click", function() {
-      var id = $(this).data("id");
+      if (confirm('Anda yakin untuk menghapus data ini?')) {
+        var id = $(this).data("id");
 
-      $.ajax({
-        url: 'halaman/aksi_lokasi.php',
-        type: 'POST',
-        dataType: 'json',
-        data: ({
-          hapus: "",
-          id: id
-        }),
-        success: function(data) {
-          alert(data);
-        },
-        error: function(error) {
-          alert(data);
-        }
-      })
+        $.ajax({
+          url: 'halaman/aksi_lokasi.php',
+          type: 'POST',
+          dataType: 'json',
+          data: ({
+            hapus: "",
+            id: id
+          }),
+          success: function(data) {
+            alert(data);
+          },
+          error: function(error) {
+            alert(data);
+          }
+        })
+      }
     })
   });
 

@@ -13,7 +13,8 @@ if (isset($_GET["page"])) {
   $page = "dashboard";
 }
 
-$nama = $_SESSION["username"];
+$id = $_SESSION["id"];
+$nama = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +49,11 @@ $nama = $_SESSION["username"];
       </div>
 
       <ul class="list-unstyled components">
+        <?php
+        $data = mysqli_query($koneksi, "SELECT foto FROM karyawan WHERE id = $id");
+        $d = mysqli_fetch_assoc($data);
+        ?>
+        <img src="../img/uploaded_img/<?= $d["foto"] ?>" class="rounded-circle ml-3" width="120px" height="120px">
         <p class="lead text-primary font-weight-bold">Welcome, <?php echo $nama; ?>!</p>
         <li class="active">
           <a href="index.php?page=dashboard"> <i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>

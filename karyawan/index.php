@@ -7,7 +7,7 @@ if ($_SESSION["status"] !== "karyawan") {
 
 require('../koneksi.php');
 
-$nama = $_SESSION["username"];
+$nama = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +33,11 @@ $nama = $_SESSION["username"];
         <ul class="navbar-nav ml-auto align-items-center">
           <li class="nav-item mr-4">
             <p class="font-weight-bold lead mt-3">Halo, <?php echo $nama; ?></p>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn mr-4 text-white" href="pengaturan.php">
+              Pengaturan Akun
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-outline-warning text-white px-3" href="../logout.php">
@@ -148,11 +153,44 @@ $nama = $_SESSION["username"];
         <h3 class="text-muted">Work hard, Play Hard</h3>
       </div>
     </div>
+    <div class="row mb-5">
+      <div class="col-md-12 table-responsive">
+        <table class="table table-hover text-center">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Waktu</th>
+              <th scope="col">Lokasi</th>
+              <th scope="col">Pesan</th>
+              <th scope="col">Gambar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            $i = 1;
+            $data = mysqli_query($koneksi, "SELECT * FROM absensi WHERE nama_karyawan = '$nama' ORDER BY id DESC");
+            while ($d = mysqli_fetch_assoc($data)) :
+            ?>
+              <tr>
+                <th scope="row"><?= $i ?></th>
+                <td><?= $d["waktu"] ?></td>
+                <td><?= $d["lokasi"] ?></td>
+                <td><?= $d["pesan"] ?></td>
+                <td><img src="../img/uploaded_img/<?= $d["gambar"] ?>" alt="" width="75px" alt="not_found"></td>
+              </tr>
+            <?php
+              $i++;
+            endwhile;
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   <!-- End of Content -->
 
   <!-- Footer -->
-  <footer class="text-center py-3 bg-light">
+  <footer class="text-center mt-5 py-3 bg-light">
     &copy; Will 2020. All rights reserved.
   </footer>
   <!-- End of Footer -->

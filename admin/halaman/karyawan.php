@@ -22,6 +22,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">No</th>
+              <th scope="col">Username</th>
               <th scope="col">Nama</th>
               <th scope="col">Jenis Kelamin</th>
               <th scope="col">No KTP</th>
@@ -30,7 +31,6 @@
               <th scope="col">Alamat</th>
               <th scope="col">Departemen</th>
               <th scope="col">Shift</th>
-              <th scope="col">Gaji</th>
               <th scope="col">Aksi</th>
             </tr>
           </thead>
@@ -40,6 +40,7 @@
             ?>
               <tr>
                 <th scope="row"><?= $i ?></th>
+                <td><?php echo $d["username"] ?></td>
                 <td>
                   <?php
                   if ($d["nama"] == $d["kepala_dept"]) {
@@ -65,12 +66,11 @@
                 <td><?php echo $d["alamat"] ?></td>
                 <td><?php echo $d["departemen"] ?></td>
                 <td><?php echo $d["shift"] ?></td>
-                <td><?php echo $d["gaji"] ?></td>
                 <td>
                   <a href="" class="btn edit-btn" data-id="<?php echo $d["id"]; ?>" data-toggle="modal" data-target="#formModal" onclick="changeType('ubah');">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>" onclick="return confirm('Anda yakin untuk menghapus data ini?')">
+                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
@@ -97,8 +97,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="halaman/aksi_karyawan.php" method="POST">
+        <form action="halaman/aksi_karyawan.php" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="id" id="id">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input required type="text" class="form-control" id="username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password" id="label_password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
           <div class="form-group">
             <label for="nama">Nama</label>
             <input required type="text" class="form-control" id="nama" name="nama">
@@ -127,6 +135,11 @@
             <input required type="text" class="form-control" id="alamat" name="alamat">
           </div>
           <div class="form-group">
+            <img src="" alt="" id="foto" width="120px" class="mb-1">
+            <label for="upload" class="d-block">Upload Foto</label>
+            <input type="file" class="form-control-file" id="upload" name="foto" required>
+          </div>
+          <div class="form-group">
             <label for="departemen">Departemen</label>
             <select class="form-control" id="departemen" name="departemen">
               <?php
@@ -148,10 +161,6 @@
               <?php endwhile; ?>
             </select>
           </div>
-          <div class="form-group">
-            <label for="gaji">Gaji</label>
-            <input required type="number" class="form-control" id="gaji" name="gaji">
-          </div>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" name="tambah" id="buttonSubmit">Tambah</button>
@@ -164,12 +173,18 @@
 <script>
   $(document).ready(function() {
     $(".tambah-btn").on("click", function() {
+      $("#username").val("");
+      $("#label_password").show();
+      $("#password").show();
+      $("#password").val("");
       $("#nama").val("");
       $("#no_ktp").val("");
       $("#email").val("");
       $("#no_telp").val("");
       $("#alamat").val("");
-      $("#gaji").val("");
+      $("#upload").val("");
+      $("#foto").attr("src", "");
+      $("#foto").hide();
     });
 
     $(".edit-btn").on("click", function() {
@@ -184,37 +199,43 @@
           id: id
         }),
         success: function(data) {
+          $("#username").val(data.username);
+          $("#label_password").hide();
+          $("#password").hide();
+          $("#password").val("");
           $("#nama").val(data.nama);
           $("#jenis_kelamin").val(data.jenis_kelamin);
           $("#no_ktp").val(data.no_ktp);
           $("#email").val(data.email);
           $("#no_telp").val(data.no_telp);
           $("#alamat").val(data.alamat);
+          $("#foto").show();
+          $("#foto").attr("src", "../img/uploaded_img/" + data.foto);
           $("#shift").val(data.id_shift);
           $("#departemen").val(data.id_departemen);
-          $("#gaji").val(data.gaji);
         }
       })
     })
 
     $(".hapus-btn").on("click", function() {
-      var id = $(this).data("id");
-
-      $.ajax({
-        url: 'halaman/aksi_karyawan.php',
-        type: 'POST',
-        dataType: 'json',
-        data: ({
-          hapus: "",
-          id: id
-        }),
-        success: function(data) {
-          alert(data);
-        },
-        error: function(error) {
-          alert(data);
-        }
-      })
+      if (confirm('Anda yakin untuk menghapus data ini?')) {
+        var id = $(this).data("id");
+        $.ajax({
+          url: 'halaman/aksi_karyawan.php',
+          type: 'POST',
+          dataType: 'json',
+          data: ({
+            hapus: "",
+            id: id
+          }),
+          success: function(data) {
+            alert(data);
+          },
+          error: function(error) {
+            alert(data);
+          }
+        })
+      }
     })
   });
 

@@ -13,11 +13,8 @@
       <div class="card-body table-responsive">
         <?php
         $i = 1;
-        $data = mysqli_query($koneksi, "SELECT id, username, account_type FROM user");
+        $data = mysqli_query($koneksi, "SELECT id, username, account_type FROM karyawan");
         ?>
-        <a href="#" class="btn btn-outline-dark float-right mb-3 tambah-btn" data-toggle="modal" data-target="#formModal" onclick="changeType('tambah')">
-          <i class="fas fa-plus mr-2"></i>Tambah
-        </a>
         <table class="table table-hover text-center">
           <thead class="thead-dark">
             <tr>
@@ -36,10 +33,10 @@
                 <td><?= $d["username"] ?></td>
                 <td><?php echo ($d["account_type"] == 1 ? "Admin" : "Karyawan")  ?></td>
                 <td>
-                  <a href="" class="btn edit-btn" data-id="<?php echo $d["id"]; ?>" data-toggle="modal" data-target="#formModal" onclick="changeType('ubah');">
+                  <a href="" class="btn edit-btn" data-id="<?php echo $d["id"]; ?>" data-toggle="modal" data-target="#formModal">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>" onclick="return confirm('Anda yakin untuk menghapus data ini?')">
+                  <a href="" class="btn hapus-btn" data-id="<?php echo $d["id"]; ?>">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                 </td>
@@ -60,7 +57,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Tambah akun</h5>
+        <h5 class="modal-title" id="formModalLabel">Edit akun</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -70,7 +67,14 @@
           <input type="hidden" name="id" id="id">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter your username.." name="username" required>
+            <select class="form-control" id="username" name="username">
+              <?php
+              $data = mysqli_query($koneksi, "SELECT username FROM karyawan");
+              while ($d = mysqli_fetch_assoc($data)) :
+              ?>
+                <option value="<?php echo $d["username"] ?>"><?php echo $d["username"] ?></option>
+              <?php endwhile; ?>
+            </select>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -85,7 +89,7 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" name="tambah" id="buttonSubmit">Tambah</button>
+        <button type="submit" class="btn btn-primary" name="ubah" id="buttonSubmit">Edit</button>
         </form>
       </div>
     </div>
@@ -94,10 +98,6 @@
 
 <script>
   $(document).ready(function() {
-    $(".tambah-btn").on("click", function() {
-      $("#username").val("");
-    });
-
     $(".edit-btn").on("click", function() {
       var id = $(this).data("id");
       $("#id").val(id);
@@ -117,41 +117,26 @@
     })
 
     $(".hapus-btn").on("click", function() {
-      var id = $(this).data("id");
+      alert('Anda akan menghapus data di tabel karyawan!');
+      if (confirm('Anda yakin untuk menghapus data ini?')) {
+        var id = $(this).data("id");
 
-      $.ajax({
-        url: 'halaman/aksi_akun.php',
-        type: 'POST',
-        dataType: 'json',
-        data: ({
-          hapus: "",
-          id: id
-        }),
-        success: function(data) {
-          alert(data);
-        },
-        error: function(error) {
-          alert(data);
-        }
-      })
+        $.ajax({
+          url: 'halaman/aksi_akun.php',
+          type: 'POST',
+          dataType: 'json',
+          data: ({
+            hapus: "",
+            id: id
+          }),
+          success: function(data) {
+            alert(data);
+          },
+          error: function(error) {
+            alert(data);
+          }
+        })
+      }
     })
   });
-
-  function changeType(_type) {
-    var modalTitle = document.getElementById("formModalLabel");
-    var buttonSubmit = document.getElementById("buttonSubmit");
-
-    switch (_type) {
-      case 'tambah':
-        modalTitle.innerHTML = "Tambah akun";
-        buttonSubmit.innerHTML = "Tambah";
-        buttonSubmit.name = "tambah";
-        break;
-      case 'ubah':
-        modalTitle.innerHTML = "Edit akun";
-        buttonSubmit.innerHTML = "Edit";
-        buttonSubmit.name = "ubah";
-        break;
-    }
-  }
 </script>
