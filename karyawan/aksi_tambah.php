@@ -15,11 +15,11 @@ $y = explode(" ", $waktu);
 $jam = $y[1];
 
 $jam_absen_pagi = "08:00:00";
-$jam_absen_sore = "17:00:00";
+$jam_absen_sore = "15:00:00";
 
 if ($tipe == 2 && $jam < $jam_absen_sore) {
   echo "<script>
-          alert('Absen pulang jam 5 sore ya.');
+          alert('Absen pulang jam 3 sore ya.');
           window.location='index.php';
         </script>";
   return;
@@ -27,7 +27,9 @@ if ($tipe == 2 && $jam < $jam_absen_sore) {
 
 $terlambat = 2;
 
-if ($jam > $jam_absen_pagi) {
+if ($tipe == 2 && $jam > $jam_absen_sore) {
+  $terlambat = 3;
+} else if ($jam > $jam_absen_pagi) {
   $terlambat = 1;
 }
 

@@ -52,7 +52,7 @@
                     <th scope="col">Waktu</th>
                     <th scope="col">Pesan</th>
                     <th scope="col">Absen</th>
-                    <th scope="col">Hadir/Terlambat/Tidak Hadir</th>
+                    <th scope="col">Hadir/Terlambat/Overtime/Tidak Hadir</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@
                       <td><?= $d["lokasi"] ?></td>
                       <td>
                         <?php
-                        if ($d["hadir"] == 1) {
+                        if ($d["tipe_absen"] == 1 && $d["hadir"] == 1) {
                           echo "<p class='text-danger'>" . $d["waktu"] . "</p>";
                         } else {
                           echo $d["waktu"];
@@ -92,6 +92,8 @@
                           echo "Terlambat";
                         } else if ($d["hadir"] == 2) {
                           echo "Hadir";
+                        } else if ($d["hadir"] == 3) {
+                          echo "Overtime";
                         }
                         ?>
                       </td>

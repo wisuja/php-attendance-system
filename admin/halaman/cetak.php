@@ -39,7 +39,7 @@ if (isset($_POST["cetak"])) :
                 <th scope="col">Waktu</th>
                 <th scope="col">Pesan</th>
                 <th scope="col">Absen</th>
-                <th scope="col">Hadir/Terlambat/Tidak Hadir</th>
+                <th scope="col">Hadir/Terlambat/Overtime/Tidak Hadir</th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +52,7 @@ if (isset($_POST["cetak"])) :
                   <td><?= $d["lokasi"] ?></td>
                   <td>
                     <?php
-                    if ($d["hadir"] == 1) {
+                    if ($d["tipe_absen"] == 1 && $d["hadir"] == 1) {
                       echo "<p class='text-danger'>" . $d["waktu"] . "</p>";
                     } else {
                       echo $d["waktu"];
@@ -79,6 +79,8 @@ if (isset($_POST["cetak"])) :
                       echo "Terlambat";
                     } else if ($d["hadir"] == 2) {
                       echo "Hadir";
+                    } else if ($d["hadir"] == 3) {
+                      echo "Overtime";
                     }
                     ?>
                   </td>
@@ -89,6 +91,11 @@ if (isset($_POST["cetak"])) :
               ?>
             </tbody>
           </table>
+          <form action="halaman/cetak.php" method="POST">
+            <input type="hidden" value="<?php echo $dari; ?>" name="dari">
+            <input type="hidden" value="<?php echo $sampai; ?>" name="sampai">
+            <button type="submit" class="btn btn-outline-dark float-right" name="cetak"><i class="fas fa-print mr-2"></i>Cetak</button>
+          </form>
         </div>
       </div>
     <?php endif; ?>
