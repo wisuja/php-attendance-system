@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 require '../koneksi.php';
 
-$nama_karyawan = $_SESSION["username"];
+$nama_karyawan = $_SESSION["nama"];
 $lokasi = $_POST["lokasi"];
 $gambar = $_FILES["gambar"]["name"];
 $pesan = $_POST["pesan"];
