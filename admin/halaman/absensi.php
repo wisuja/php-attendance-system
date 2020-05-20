@@ -35,8 +35,8 @@
 
         <?php
         if (isset($_POST["cari"])) :
-          $dari = date('Y-m-d', strtotime($_POST["dari"]));
-          $sampai = date('Y-m-d', strtotime($_POST["sampai"]));
+          $dari = date('Y-m-d', strtotime($_POST["dari"])) . ' 00:00:00';
+          $sampai = date('Y-m-d', strtotime($_POST["sampai"])) . ' 23:59:59';
 
           $i = 1;
           $data = mysqli_query($koneksi, "SELECT nama_karyawan, lokasi, waktu, pesan, tipe_absen, hadir FROM absensi WHERE waktu >= '$dari' AND waktu <= '$sampai'");
@@ -104,7 +104,7 @@
                   ?>
                 </tbody>
               </table>
-              <form action="halaman/cetak.php" method="POST">
+              <form action="halaman/cetak_absensi.php" method="POST" target="_blank">
                 <input type="hidden" value="<?php echo $dari; ?>" name="dari">
                 <input type="hidden" value="<?php echo $sampai; ?>" name="sampai">
                 <button type="submit" class="btn btn-outline-dark float-right" name="cetak"><i class="fas fa-print mr-2"></i>Cetak</button>

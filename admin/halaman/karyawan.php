@@ -81,6 +81,9 @@
             ?>
           </tbody>
         </table>
+        <form action="halaman/cetak_karyawan.php" method="POST" target="_blank">
+          <button type="submit" class="btn btn-outline-dark float-right" name="cetak"><i class="fas fa-print mr-2"></i>Cetak</button>
+        </form>
       </div>
     </div>
   </div>

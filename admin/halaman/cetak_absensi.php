@@ -6,8 +6,8 @@ if (isset($_POST["cetak"])) :
   $dari = $_POST["dari"];
   $sampai = $_POST["sampai"];
 
-  $i = 1;
-  $data = mysqli_query($koneksi, "SELECT nama_karyawan, lokasi, waktu, pesan, tipe_absen, hadir FROM absensi WHERE waktu >= '$dari' AND waktu <= '$sampai'");
+  $tanggal_dari = explode(" ", $dari)[0];
+  $tanggal_sampai = explode(" ", $sampai)[0];
 ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -25,8 +25,12 @@ if (isset($_POST["cetak"])) :
   </head>
 
   <body>
+    <?php
+    $i = 1;
+    $data = mysqli_query($koneksi, "SELECT nama_karyawan, lokasi, waktu, pesan, tipe_absen, hadir FROM absensi WHERE waktu >= '$dari' AND waktu <= '$sampai'");
+    ?>
     <h3 class="text-center">Laporan Absensi</h3>
-    <p class="text-center">Tanggal <?php echo $dari . "-" . $sampai; ?></p>
+    <p class="text-center">Tanggal <?php echo $tanggal_dari . " - " . $tanggal_sampai; ?></p>
     <div class="container-fluid">
       <div class="row mt-3">
         <div class="col-12">
@@ -91,11 +95,6 @@ if (isset($_POST["cetak"])) :
               ?>
             </tbody>
           </table>
-          <form action="halaman/cetak.php" method="POST">
-            <input type="hidden" value="<?php echo $dari; ?>" name="dari">
-            <input type="hidden" value="<?php echo $sampai; ?>" name="sampai">
-            <button type="submit" class="btn btn-outline-dark float-right" name="cetak"><i class="fas fa-print mr-2"></i>Cetak</button>
-          </form>
         </div>
       </div>
     <?php endif; ?>

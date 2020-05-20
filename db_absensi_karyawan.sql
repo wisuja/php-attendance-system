@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: May 14, 2020 at 07:00 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.1.32
+-- Host: localhost:3306
+-- Generation Time: May 20, 2020 at 08:37 AM
+-- Server version: 10.3.22-MariaDB-cll-lve
+-- PHP Version: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_absensi_karyawan`
+-- Database: `dumdumbr_william`
 --
 
 -- --------------------------------------------------------
@@ -48,10 +48,13 @@ INSERT INTO `absensi` (`id`, `nama_karyawan`, `waktu`, `lokasi`, `pesan`, `gamba
 (5, 'Will', '2020-05-11 13:06:35', 'Rumah', 'asdas', 'login_background.jpg', 1, 2),
 (8, 'Will', '2020-05-11 13:33:57', 'Kantor', 'asdasd', 'login_background.jpg', 1, 2),
 (9, 'Will', '2020-05-11 13:42:15', 'Kantor', 'asd', 'login_background.jpg', 1, 1),
-(10, 'Will', '2020-05-11 13:42:43', 'Rumah', 'asd', 'login_background.jpg', 2, 1),
+(10, 'Will', '2020-05-11 13:42:43', 'Rumah', 'asd', 'login_background.jpg', 2, 3),
 (11, 'Will', '2020-05-11 13:44:14', 'Kantor', 'asdas', 'login_background.jpg', 1, 1),
-(12, 'Will', '2020-05-11 13:44:21', 'Rumah', 'asdas', 'login_background.jpg', 2, 1),
-(13, 'Will', '2020-05-11 13:45:04', 'Kantor', 'asd', 'login_background.jpg', 1, 1);
+(12, 'Will', '2020-05-11 13:44:21', 'Rumah', 'asdas', 'login_background.jpg', 2, 3),
+(13, 'Will', '2020-05-11 13:45:04', 'Kantor', 'asd', 'login_background.jpg', 1, 1),
+(15, 'test', '2020-05-20 13:47:03', 'Kantor', 'asdasd', '197-karyawan_illustration.png', 1, 1),
+(16, 'karyawan', '2020-05-20 19:30:43', 'Rumah', 'test', '677-woman-working.PNG', 1, 1),
+(17, 'karyawan', '2020-05-20 19:31:39', 'Rumah', 'test 2', '619-woman-working.PNG', 2, 3);
 
 -- --------------------------------------------------------
 
@@ -99,7 +102,8 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id`, `username`, `password`, `account_type`, `nama`, `jenis_kelamin`, `no_telp`, `email`, `no_ktp`, `alamat`, `foto`, `id_shift`, `id_departemen`) VALUES
-(9, 'will', 'will', 1, 'Will', 'L', '123123', '123123@12312', '123123', 'batam', 'login_background.jpg', 1, 1);
+(9, 'will', 'will', 1, 'Will', 'L', '123123', '123123@12312', '123123', 'batam', 'login_background.jpg', 1, 1),
+(12, 'karyawan', 'karyawan', 2, 'karyawan', 'L', '1231231231', 'test@gmail.com', '08123123123', 'test', '344-karyawan_illustration.png', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +189,7 @@ ALTER TABLE `shift`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `departemen`
@@ -197,7 +201,7 @@ ALTER TABLE `departemen`
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `lokasi`

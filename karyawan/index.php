@@ -7,6 +7,7 @@ if ($_SESSION["status"] !== "karyawan") {
 
 require('../koneksi.php');
 
+$id = $_SESSION["id"];
 $nama = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
@@ -52,6 +53,16 @@ $nama = $_SESSION["name"];
 
   <!-- Content -->
   <div class="container">
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <?php
+        $data = mysqli_query($koneksi, "SELECT S.shift FROM karyawan AS K INNER JOIN shift AS S ON K.id_shift = S.id WHERE K.id = $id");
+        while ($d = mysqli_fetch_assoc($data)) :
+        ?>
+          <h3>Shift kamu adalah shift <?php echo $d["shift"] ?></h3>
+        <?php endwhile; ?>
+      </div>
+    </div>
     <div class="row karyawan-container">
       <div class="col-md-6 absen-container">
         <div class="card absen-card text-center my-3" style="width: 18rem;">
@@ -184,11 +195,16 @@ $nama = $_SESSION["name"];
             ?>
           </tbody>
         </table>
+        <form action="cetak_absensi.php" method="POST" target="_blank">
+          <input type="hidden" value="<?php echo $dari; ?>" name="dari">
+          <input type="hidden" value="<?php echo $sampai; ?>" name="sampai">
+          <button type="submit" class="btn btn-outline-dark float-right" name="cetak"><i class="fas fa-print mr-2"></i>Cetak</button>
+        </form>
       </div>
     </div>
   </div>
   <!-- End of Content -->
-
+  <br>
   <!-- Footer -->
   <footer class="text-center mt-5 py-3 bg-light">
     &copy; Will 2020. All rights reserved.

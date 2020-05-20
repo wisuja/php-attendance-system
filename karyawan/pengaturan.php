@@ -102,7 +102,8 @@ $nama = $_SESSION["name"];
     </form>
   </div>
   <!-- End of Content -->
-
+  <br>
+  <br>
   <!-- Footer -->
   <footer class="text-center mt-5 py-3 bg-light">
     &copy; Will 2020. All rights reserved.

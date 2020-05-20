@@ -1,0 +1,9 @@
+Link: http://william.dumdumbros.com/
+
+Admin Account:
+username: will
+password: will
+
+User Account:
+username: karyawan
+password: karyawan
