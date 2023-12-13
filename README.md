@@ -5,6 +5,14 @@ PHP-based website that was built to help companies keep track of employees' atte
 
 The website is in Indonesian language.
 
+# Steps to clone repository
+
+1. Click on `<> Code` button
+2. Copy the HTTPS/SSH repository link
+3. Run `git clone` command on your terminal.
+4. Import the database using `.sql` script provided.
+5. Open the website on your localhost.
+
 ## Key Features
 
 - Check-in system for employee
@@ -30,14 +38,6 @@ The website is in Indonesian language.
 
 **Employee Attendance Report Screen**
 ![Employee Attendance Report  Screen](documentation-images/Employee%20Attendance%20Report%20Screen.png)
-
-# Steps to clone repository
-
-1. Click on `<> Code` button
-2. Copy the HTTPS/SSH repository link
-3. Run `git clone` command on your terminal.
-4. Import the database using `.sql` script provided.
-5. Open the website on your localhost.
 
 <br/>
 
